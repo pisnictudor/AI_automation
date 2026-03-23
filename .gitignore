@@ -8,6 +8,7 @@ __pycache__/
 
 #Ignore passwords and config file
 .env
+config.py
 
 #Ignore error logs
 *.log
