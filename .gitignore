@@ -1,0 +1,13 @@
+# Ignore virtual env
+venv/
+env/
+
+#Ignore cache file
+__pycache__/
+*.pyc
+
+#Ignore passwords and config file
+.env
+
+#Ignore error logs
+*.log
