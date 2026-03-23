@@ -34,11 +34,14 @@ Tone: ...
 Title: {title}
 Body: {body}
 """
-
-    response = client.models.generate_content(
-        model="gemini-3-flash-preview",
-        contents=prompt
-    )
+    try:
+        response = client.models.generate_content(
+            model="gemini-3-flash-preview",
+            contents=prompt
+        )
+    except Exception as e:
+        print(f"Error while analyzing post with AI: {e}")
+        return "Summary error\nTone error"
 
     return response.text
 
@@ -59,13 +62,17 @@ def parse_ai_response(ai_text):
 
 # 5. Saving data in CSV
 def save_to_csv(filename, rows):
-    with open(filename, "w", newline="", encoding="utf-8") as file:
-        writer = csv.writer(file)
+    try:
+        with open(filename, "w", newline="", encoding="utf-8") as file:
+            writer = csv.writer(file)
 
-        writer.writerow(["ID", "Title", "Summary", "Tone"])
+            writer.writerow(["ID", "Title", "Summary", "Tone"])
 
-        for row in rows:
-            writer.writerow(row)
+            for row in rows:
+                writer.writerow(row)
+    except OSError as e:
+        print(f"Error saving in csv file: {e}")
+
 
 # 6. Main function
 def main():
@@ -91,4 +98,5 @@ def main():
     print("Report saved in: report_ai.csv")
 
 # 7. Running the programm
-main()
+if __name__ == "__main__":
+    main()
